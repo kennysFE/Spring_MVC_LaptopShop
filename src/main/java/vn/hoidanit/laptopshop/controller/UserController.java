@@ -39,19 +39,3 @@ public class UserController {
         return "hello";
     }
 }
-
-// @RestController
-// public class UserController {
-
-// // DI : dependency injection
-// private UserService userService;
-
-// public UserController(UserService userService) {
-// this.userService = userService;
-// }
-
-// @GetMapping("/")
-// public String getHomePage() {
-// return this.userService.handleHello();
-// }
-// }
