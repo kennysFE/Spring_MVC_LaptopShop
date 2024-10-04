@@ -26,9 +26,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
           <div class="d-flex justify-content-between">
             <h3>User detail with id = ${id}</h3>
           </div>
-
           <hr />
-
           <div class="card" style="width: 60%">
             <div class="card-header">User information</div>
             <ul class="list-group list-group-flush">
