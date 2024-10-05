@@ -7,7 +7,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Update Users</title>
+    <title>Delete User ${id}</title>
     <!-- Latest compiled and minified CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -23,43 +23,30 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
   <body>
     <div class="container mt-5">
       <div class="row">
-        <div class="col-md-6 col-12 mx-auto">
-          <h3>Update a user</h3>
+        <div class="col-12 mx-auto">
+          <div class="d-flex justify-content-between">
+            <h3>Delete the user with id = ${id}</h3>
+          </div>
+
           <hr />
+          <div class="alert alert-danger">
+            Are you sure to delete this user ?
+          </div>
           <form:form
             method="post"
-            action="/admin/user/update"
+            action="/admin/user/delete"
             modelAttribute="newUser"
           >
             <div class="mb-3" style="display: none">
               <label class="form-label">Id:</label>
-              <form:input type="text" class="form-control" path="id" />
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Email:</label>
               <form:input
-                type="email"
+                value="${id}"
+                type="text"
                 class="form-control"
-                path="email"
-                disabled="true"
+                path="id"
               />
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Phone number:</label>
-              <form:input type="text" class="form-control" path="phone" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Full Name:</label>
-              <form:input type="text" class="form-control" path="fullName" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Address:</label>
-              <form:input type="text" class="form-control" path="address" />
-            </div>
-
-            <button type="submit" class="btn btn-warning">Update</button>
+            <button class="btn btn-danger">Confirm</button>
           </form:form>
         </div>
       </div>
