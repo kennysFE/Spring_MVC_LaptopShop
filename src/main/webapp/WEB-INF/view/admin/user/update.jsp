@@ -82,7 +82,13 @@ uri="http://www.springframework.org/tags/form" %>
                         path="address"
                       />
                     </div>
-
+                    <div class="mb-3 col-12 col-md-6">
+                      <label class="form-label">Role:</label>
+                      <form:select class="form-select" path="role.name">
+                        <form:option value="ADMIN">ADMIN</form:option>
+                        <form:option value="USER">USER</form:option>
+                      </form:select>
+                    </div>
                     <button type="submit" class="btn btn-warning">
                       Update
                     </button>

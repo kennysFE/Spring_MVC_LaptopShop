@@ -39,9 +39,7 @@ uri="http://www.springframework.org/tags/form" %>
                   <div class="d-flex justify-content-between">
                     <h3>User detail with id = ${id}</h3>
                   </div>
-
                   <hr />
-
                   <div class="card" style="width: 60%">
                     <div class="card-header">User information</div>
                     <ul class="list-group list-group-flush">
@@ -51,6 +49,7 @@ uri="http://www.springframework.org/tags/form" %>
                         FullName: ${user.fullName}
                       </li>
                       <li class="list-group-item">Address: ${user.address}</li>
+                      <li class="list-group-item">Role: ${user.role.name}</li>
                     </ul>
                   </div>
                   <a href="/admin/user" class="btn btn-success mt-3">Back</a>
