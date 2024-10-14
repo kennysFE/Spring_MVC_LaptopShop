@@ -33,7 +33,7 @@ uri="http://www.springframework.org/tags/form" %>
               <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
               <li class="breadcrumb-item active">Users</li>
             </ol>
-            <div class="container mt-5">
+            <div class="container my-5">
               <div class="row">
                 <div class="col-12 mx-auto">
                   <div class="d-flex justify-content-between">
@@ -50,6 +50,15 @@ uri="http://www.springframework.org/tags/form" %>
                       </li>
                       <li class="list-group-item">Address: ${user.address}</li>
                       <li class="list-group-item">Role: ${user.role.name}</li>
+                      <li class="list-group-item">
+                        <div style="max-width: 250px">
+                          <img
+                            class="img-thumbnail"
+                            src="/images/avatar/${user.avatar}"
+                            alt="Avatar"
+                          />
+                        </div>
+                      </li>
                     </ul>
                   </div>
                   <a href="/admin/user" class="btn btn-success mt-3">Back</a>
