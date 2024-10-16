@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class ItemController {
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/product/{id}")
     public String getProductPage(Model model, @PathVariable long id) {
         return "client/product/detail";
     }
