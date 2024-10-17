@@ -17,11 +17,11 @@ uri="http://www.springframework.org/tags/form" %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
       $(document).ready(() => {
-        const avatarFile = $("#avatarFile");
-        avatarFile.change(function (e) {
+        const imageFile = $("#imageFile");
+        imageFile.change(function (e) {
           const imgURL = URL.createObjectURL(e.target.files[0]);
-          $("#avatarPreview").attr("src", imgURL);
-          $("#avatarPreview").css({ display: "block" });
+          $("#imagePreview").attr("src", imgURL);
+          $("#imagePreview").css({ display: "block" });
         });
       });
     </script>
@@ -50,55 +50,93 @@ uri="http://www.springframework.org/tags/form" %>
                   <hr />
                   <form:form
                     method="post"
-                    action="/admin/user/create"
+                    action="/admin/product/create"
                     class="row"
                     enctype="multipart/form-data"
                     modelAttribute="newProduct"
                   >
                     <div class="mb-3 col-12 col-md-6">
+                      <c:set var="errorName">
+                        <form:errors path="name" cssClass="invalid-feedback" />
+                      </c:set>
                       <label class="form-label">Name:</label>
                       <form:input
                         type="text"
-                        class="form-control"
+                        class="form-control ${not empty errorName ? 'is-invalid' : ''}"
                         path="name"
                       />
+                      ${errorName}
                     </div>
                     <div class="mb-3 col-12 col-md-6">
+                      <c:set var="errorPrice">
+                        <form:errors path="price" cssClass="invalid-feedback" />
+                      </c:set>
                       <label class="form-label">Price:</label>
                       <form:input
                         type="number"
-                        class="form-control"
+                        class="form-control ${not empty errorPrice ? 'is-invalid' : ''}"
                         path="price"
                       />
+                      ${errorPrice}
                     </div>
                     <div class="mb-3 col-12">
+                      <c:set var="errorDetailDesc">
+                        <form:errors
+                          path="detailDesc"
+                          cssClass="invalid-feedback"
+                        />
+                      </c:set>
                       <label class="form-label">Detail description:</label>
                       <form:textarea
                         type="text"
-                        class="form-control"
+                        class="form-control ${not empty errorDetailDesc ? 'is-invalid' : ''}"
                         path="detailDesc"
                       />
+                      ${errorDetailDesc}
                     </div>
                     <div class="mb-3 col-12 col-md-6">
+                      <c:set var="errorShortDesc">
+                        <form:errors
+                          path="shortDesc"
+                          cssClass="invalid-feedback"
+                        />
+                      </c:set>
                       <label class="form-label">Short description:</label>
                       <form:input
                         type="text"
-                        class="form-control"
+                        class="form-control ${not empty errorShortDesc ? 'is-invalid' : ''}"
                         path="shortDesc"
                       />
+                      ${errorShortDesc}
                     </div>
                     <div class="mb-3 col-12 col-md-6">
+                      <c:set var="errorQuantity">
+                        <form:errors
+                          path="quantity"
+                          cssClass="invalid-feedback"
+                        />
+                      </c:set>
                       <label class="form-label">Quantity:</label>
                       <form:input
                         type="number"
-                        class="form-control"
+                        class="form-control ${not empty errorQuantity ? 'is-invalid' : ''}"
                         path="quantity"
                       />
+                      ${errorQuantity}
                     </div>
 
                     <div class="mb-3 col-12 col-md-6">
+                      <c:set var="errorFactory">
+                        <form:errors
+                          path="factory"
+                          cssClass="invalid-feedback"
+                        />
+                      </c:set>
                       <label class="form-label">Factory:</label>
-                      <form:select class="form-select" path="factory">
+                      <form:select
+                        class="form-select ${not empty errorFactory ? 'is-invalid' : ''}"
+                        path="factory"
+                      >
                         <form:option value="APPLE">Apple (MacBook)</form:option>
                         <form:option value="ASUS">Asus</form:option>
                         <form:option value="LENOVO">Lenovo</form:option>
@@ -106,10 +144,20 @@ uri="http://www.springframework.org/tags/form" %>
                         <form:option value="LG">LG</form:option>
                         <form:option value="ACER">Acer</form:option>
                       </form:select>
+                      ${errorFactory}
                     </div>
                     <div class="mb-3 col-12 col-md-6">
+                      <c:set var="errorTarget">
+                        <form:errors
+                          path="target"
+                          cssClass="invalid-feedback"
+                        />
+                      </c:set>
                       <label class="form-label">Target:</label>
-                      <form:select class="form-select" path="target">
+                      <form:select
+                        class="form-select ${not empty errorTarget ? 'is-invalid' : ''}"
+                        path="target"
+                      >
                         <form:option value="GAMING">Gaming</form:option>
                         <form:option value="SINHVIEN-VANPHONG"
                           >Sinh viên - Văn phòng
@@ -120,22 +168,29 @@ uri="http://www.springframework.org/tags/form" %>
                         <form:option value="MONG-NHE">Mỏng nhẹ</form:option>
                         <form:option value="DOANH-NHAN">Doanh nhân</form:option>
                       </form:select>
+                      ${errorTarget}
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                      <label for="avatarFile" class="form-label">Image:</label>
+                      <label for="imageFile" class="form-label" path="image"
+                        >Image:</label
+                      >
                       <input
-                        class="form-control"
+                        class="form-control ${not empty errorImageProduct ? 'is-invalid' : ''}"
                         type="file"
-                        id="avatarFile"
+                        id="imageFile"
                         accept=".png, .jpg, .jpeg"
-                        name="hoidanitFile"
+                        name="imageProduct"
                       />
+                      <span
+                        class="${not empty errorImageProduct ? 'invalid-feedback' : 'd-none'}"
+                        >${errorImageProduct}</span
+                      >
                     </div>
                     <div class="col-12 mb-3">
                       <img
                         style="max-height: 250px; display: none"
-                        alt="avatar preview"
-                        id="avatarPreview"
+                        alt="image preview"
+                        id="imagePreview"
                       />
                     </div>
                     <div class="col-12 mb-5">

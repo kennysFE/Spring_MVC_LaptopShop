@@ -5,6 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
@@ -15,22 +19,37 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
+    @NotEmpty(message = "Name product can not be empty")
     private String name;
 
+    @NotNull
+    @DecimalMin(value = "0", inclusive = false, message = "Price product can not be less than 0")
     private double price;
 
+    // Todo Config validation parameters
     private String image;
 
+    @NotNull
+    @NotEmpty(message = "Product needs detail description")
     private String detailDesc;
 
+    @NotNull
+    @NotEmpty(message = "Product needs short description")
     private String shortDesc;
 
+    @NotNull
+    @Min(value = 1, message = "Quantity must be less than 0")
     private long quantity;
 
     private long sold;
 
+    @NotNull
+    @NotEmpty(message = "Product needs factory description")
     private String factory;
 
+    @NotNull
+    @NotEmpty(message = "Product needs company")
     private String target;
 
     // Getters and setters
