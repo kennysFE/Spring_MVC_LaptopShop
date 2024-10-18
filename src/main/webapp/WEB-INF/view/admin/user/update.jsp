@@ -18,6 +18,12 @@ uri="http://www.springframework.org/tags/form" %>
     <script>
       $(document).ready(() => {
         const avatarFile = $("#avatarFile");
+        const originAvatar = "${newUser.avatar}";
+        if (originAvatar) {
+          const originAvatarUrl = "/images/avatar/" + originAvatar;
+          $("#avatarPreview").attr("src", originAvatarUrl);
+          $("#avatarPreview").css({ display: "block" });
+        }
         avatarFile.change(function (e) {
           const imgURL = URL.createObjectURL(e.target.files[0]);
           $("#avatarPreview").attr("src", imgURL);
@@ -113,8 +119,7 @@ uri="http://www.springframework.org/tags/form" %>
                     </div>
                     <div class="col-12 mb-3">
                       <img
-                        src="/images/avatar/${newUser.avatar}"
-                        style="max-height: 250px"
+                        style="max-height: 250px; display: none"
                         alt="avatar preview"
                         id="avatarPreview"
                       />
