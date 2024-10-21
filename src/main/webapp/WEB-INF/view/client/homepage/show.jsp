@@ -30,8 +30,11 @@
 
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
+
             </head>
+
             <body>
+
                 <!-- Spinner Start -->
                 <div id="spinner"
                     class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
@@ -40,6 +43,8 @@
                 <!-- Spinner End -->
 
                 <jsp:include page="../layout/header.jsp" />
+
+
 
                 <!-- Modal Search Start -->
                 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -66,7 +71,8 @@
 
                 <jsp:include page="../layout/banner.jsp" />
 
-                <jsp:include page="../layout/feature.jsp" />
+
+
 
                 <!-- Fruits Shop Start-->
                 <div class="container-fluid fruite py-5">
@@ -135,11 +141,15 @@
                 </div>
                 <!-- Fruits Shop End-->
 
+                <jsp:include page="../layout/feature.jsp" />
+
                 <jsp:include page="../layout/footer.jsp" />
+
 
                 <!-- Back to Top -->
                 <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
                         class="fa fa-arrow-up"></i></a>
+
 
                 <!-- JavaScript Libraries -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
