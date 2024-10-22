@@ -66,12 +66,12 @@ public class ProductController {
         // Check validation file image => if true =>
         if (file.isEmpty()) {
             model.addAttribute("errorImageProduct", " Image Product can not be empty");
-            return "/admin/product/create";
+            return "admin/product/create";
         }
 
         // Check validation variable new product => if true => print error message
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/create";
+            return "admin/product/create";
         }
 
         // Handle create product
@@ -85,7 +85,7 @@ public class ProductController {
     public String getUpdateProductPage(Model model, @PathVariable long id) {
         Product product = this.productService.getProductById(id).get();
         model.addAttribute("newProduct", product);
-        return "/admin/product/update";
+        return "admin/product/update";
     }
 
     @PostMapping("/admin/product/update")
@@ -99,7 +99,7 @@ public class ProductController {
 
         // Check validation variables product
         if (updateProductBindingResult.hasErrors()) {
-            return "/admin/product/update";
+            return "admin/product/update";
         }
 
         // Get initialization variables
@@ -128,7 +128,7 @@ public class ProductController {
     public String getDeleteProductPage(Model model, @PathVariable long id) {
         model.addAttribute("id", id);
         model.addAttribute("newProduct", new Product());
-        return "/admin/product/delete";
+        return "admin/product/delete";
     }
 
     @PostMapping("admin/product/delete")
