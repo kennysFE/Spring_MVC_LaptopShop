@@ -32,12 +32,19 @@ uri="http://www.springframework.org/tags/form" %>
                     <h3 class="text-center font-weight-light my-4">Login</h3>
                   </div>
                   <div class="card-body">
-                    <form>
+                    <form method="post" action="/login">
+                      <c:if test="${param.error != null}">
+                        <div class="my-2" style="color: red">
+                          Invalid email or password.
+                        </div>
+                      </c:if>
+
                       <div class="form-floating mb-3">
                         <input
                           class="form-control"
                           type="email"
                           placeholder="name@example.com"
+                          name="username"
                         />
                         <label>Email address</label>
                       </div>
@@ -46,8 +53,16 @@ uri="http://www.springframework.org/tags/form" %>
                           class="form-control"
                           type="password"
                           placeholder="Password"
+                          name="password"
                         />
                         <label>Password</label>
+                      </div>
+                      <div>
+                        <input
+                          type="hidden"
+                          name="${_csrf.parameterName}"
+                          value="${_csrf.token}"
+                        />
                       </div>
 
                       <div class="mt-4 mb-0">
