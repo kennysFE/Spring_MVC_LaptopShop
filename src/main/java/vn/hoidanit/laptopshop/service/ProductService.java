@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
@@ -57,7 +58,7 @@ public class ProductService {
         this.productRepository.deleteById(id);
     }
 
-    public void handleAddProductToCart(String email, long productId) {
+    public void handleAddProductToCart(String email, long productId, HttpSession session) {
         // Check user has cart ? if not -> create new cart
         User user = this.userService.getUserByEmail(email);
         if (user != null) {
@@ -69,7 +70,7 @@ public class ProductService {
 
                 Cart ortherCart = new Cart();
                 ortherCart.setUser(user);
-                ortherCart.setSum(1);
+                ortherCart.setSum(0);
 
                 cart = this.cartRepository.save(ortherCart);
             }
@@ -84,15 +85,30 @@ public class ProductService {
                 // Get product
                 Product detailProduct = product.get();
 
-                // Create new Cart_detail
-                CartDetail cartDetail = new CartDetail();
-                cartDetail.setCart(cart);
-                cartDetail.setProduct(detailProduct);
-                cartDetail.setQuantity(1);
-                cartDetail.setPrice(detailProduct.getPrice());
+                // Check product is existing on cart already ?
+                CartDetail oldDetailCart = this.cartDetailRepository.findByCartAndProduct(cart, detailProduct);
 
-                // Save cart_detail
-                this.cartDetailRepository.save(cartDetail);
+                // if cartDetail is null
+                if (oldDetailCart == null) {
+                    // Create new Cart_detail
+                    CartDetail cartDetail = new CartDetail();
+                    cartDetail.setCart(cart);
+                    cartDetail.setProduct(detailProduct);
+                    cartDetail.setQuantity(1);
+                    cartDetail.setPrice(detailProduct.getPrice());
+
+                    // Update sum (Cart)
+                    int s = cart.getSum() + 1;
+                    cart.setSum(s);
+                    this.cartRepository.save(cart);
+                    session.setAttribute("sum", s);
+
+                    // Save cart_detail
+                    this.cartDetailRepository.save(cartDetail);
+                } else {
+                    oldDetailCart.setQuantity(oldDetailCart.getQuantity() + 1);
+                    this.cartDetailRepository.save(oldDetailCart);
+                }
 
             }
 
