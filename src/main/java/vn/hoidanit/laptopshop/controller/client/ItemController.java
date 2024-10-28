@@ -1,12 +1,20 @@
 package vn.hoidanit.laptopshop.controller.client;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import vn.hoidanit.laptopshop.domain.Cart;
+import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
+import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.ProductService;
+import vn.hoidanit.laptopshop.service.UserService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,8 +25,11 @@ public class ItemController {
 
     private final ProductService productService;
 
-    public ItemController(ProductService productService) {
+    private final UserService userService;
+
+    public ItemController(ProductService productService, UserService userService) {
         this.productService = productService;
+        this.userService = userService;
     }
 
     @GetMapping("/product/{id}")
@@ -41,7 +52,31 @@ public class ItemController {
     }
 
     @GetMapping("/cart")
-    public String getCartPage(Model model) {
+    public String getCartPage(Model model, HttpServletRequest request) {
+
+        User currentUser = new User();
+        // Get User
+        HttpSession session = request.getSession(false);
+        long userId = (long) session.getAttribute("id");
+        currentUser.setId(userId);
+        User userLoginDetail = this.userService.getUserById(userId);
+
+        // Get Card by User
+        Cart cartByUser = this.productService.handleGetCardByUser(userLoginDetail);
+
+        // Get detail card => if cardDetail is null => create a new array with empty
+        // values
+        List<CartDetail> cartDetails = cartByUser == null ? new ArrayList<CartDetail>() : cartByUser.getCartDetails();
+
+        // Total price
+        double totalPrice = 0;
+        for (CartDetail cartDetail : cartDetails) {
+            totalPrice += cartDetail.getPrice() * cartDetail.getQuantity();
+        }
+
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
+        // Return card
         return "client/cart/show";
     }
 

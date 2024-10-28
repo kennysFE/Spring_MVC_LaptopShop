@@ -115,4 +115,8 @@ public class ProductService {
         }
 
     }
+
+    public Cart handleGetCardByUser(User user) {
+        return this.cartRepository.findByUser(user);
+    }
 }
