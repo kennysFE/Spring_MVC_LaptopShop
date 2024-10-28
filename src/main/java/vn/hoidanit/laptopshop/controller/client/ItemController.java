@@ -80,4 +80,12 @@ public class ItemController {
         return "client/cart/show";
     }
 
+    @PostMapping("/delete-cart-product/{id}")
+    public String deleteProductOnCartPage(Model model, @PathVariable long id, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        long cartDetailId = id;
+        this.productService.handleDeleteProductOnCart(cartDetailId, session);
+        return "redirect:/cart";
+    }
+
 }
