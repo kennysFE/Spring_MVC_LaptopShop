@@ -131,14 +131,27 @@ public class ItemController {
     }
 
     @PostMapping("/place-order")
-    public String postMethodName(Model model, HttpServletRequest request,
+    public String postPlaceOrder(Model model, HttpServletRequest request,
             @RequestParam("receiverName") String receiverName,
             @RequestParam("receiverAddress") String receiverAddress,
             @RequestParam("receiverPhone") String receiverPhone) {
 
+        User currentUser = new User(); // null
         HttpSession session = request.getSession(false);
+        currentUser.setId((long) session.getAttribute("id"));
 
-        return "redirect:/";
+        // Get totalPrice
+        // double totalPrice = (double) model.getAttribute("totalPrice");
+        // System.out.println(" TotalPrice: " + totalPrice);
+
+        this.productService.handlePlaceOrder(currentUser, receiverName, receiverAddress, receiverPhone, session);
+
+        return "redirect:/thanks";
+    }
+
+    @GetMapping("/thanks")
+    public String getThanksPage() {
+        return "client/cart/thanks";
     }
 
 }
