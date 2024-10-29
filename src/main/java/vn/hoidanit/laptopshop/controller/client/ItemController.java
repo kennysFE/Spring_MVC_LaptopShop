@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.hoidanit.laptopshop.domain.Cart;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ItemController {
@@ -76,6 +78,8 @@ public class ItemController {
 
         model.addAttribute("cartDetails", cartDetails);
         model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cart", cartByUser);
         // Return card
         return "client/cart/show";
     }
@@ -86,6 +90,55 @@ public class ItemController {
         long cartDetailId = id;
         this.productService.handleDeleteProductOnCart(cartDetailId, session);
         return "redirect:/cart";
+    }
+
+    @PostMapping("/confirm-checkout")
+    public String postMethodName(Model model, @ModelAttribute("cart") Cart cart) {
+        // Get list cart detail
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+
+        // handle change quantity with each cart detailUser
+        this.productService.handleUpdateProductBeforeCheckOut(cartDetails);
+
+        return "redirect:/checkout";
+    }
+
+    @GetMapping("/checkout")
+    public String getCheckOutPage(Model model, HttpServletRequest request) {
+        User currentUser = new User();
+        // Get User
+        HttpSession session = request.getSession(false);
+        long userId = (long) session.getAttribute("id");
+        currentUser.setId(userId);
+        User userLoginDetail = this.userService.getUserById(userId);
+
+        // Get Card by User
+        Cart cartByUser = this.productService.handleGetCardByUser(userLoginDetail);
+
+        // Get detail card => if cardDetail is null => create a new array with empty
+        // values
+        List<CartDetail> cartDetails = cartByUser == null ? new ArrayList<CartDetail>() : cartByUser.getCartDetails();
+
+        // Total price
+        double totalPrice = 0;
+        for (CartDetail cartDetail : cartDetails) {
+            totalPrice += cartDetail.getPrice() * cartDetail.getQuantity();
+        }
+
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
+        return "client/cart/checkout";
+    }
+
+    @PostMapping("/place-order")
+    public String postMethodName(Model model, HttpServletRequest request,
+            @RequestParam("receiverName") String receiverName,
+            @RequestParam("receiverAddress") String receiverAddress,
+            @RequestParam("receiverPhone") String receiverPhone) {
+
+        HttpSession session = request.getSession(false);
+
+        return "redirect:/";
     }
 
 }
