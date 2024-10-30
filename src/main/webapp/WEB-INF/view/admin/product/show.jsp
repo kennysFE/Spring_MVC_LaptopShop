@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %>
+uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fmt"
+uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,7 +12,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     />
     <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
     <meta name="author" content="Hỏi Dân IT" />
-    <title>Dashboard - Hỏi Dân IT</title>
+    <title>Product - Admin Laptopshop</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script
       src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
@@ -57,7 +58,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         <tr>
                           <th>${product.id}</th>
                           <td>${product.name}</td>
-                          <td>${product.price}</td>
+                          <td>
+                            <fmt:formatNumber
+                              type="number"
+                              value="${product.price}"
+                            />
+                            đ
+                          </td>
                           <td>${product.factory}</td>
                           <td>
                             <a

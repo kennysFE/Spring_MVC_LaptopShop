@@ -38,7 +38,7 @@ public class Order {
 
     // one order -> to -> many order details
     @OneToMany(mappedBy = "order")
-    List<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetails;
 
     // Getters and setters
     public long getId() {
