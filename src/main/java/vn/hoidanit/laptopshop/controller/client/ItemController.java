@@ -140,10 +140,6 @@ public class ItemController {
         HttpSession session = request.getSession(false);
         currentUser.setId((long) session.getAttribute("id"));
 
-        // Get totalPrice
-        // double totalPrice = (double) model.getAttribute("totalPrice");
-        // System.out.println(" TotalPrice: " + totalPrice);
-
         this.productService.handlePlaceOrder(currentUser, receiverName, receiverAddress, receiverPhone, session);
 
         return "redirect:/thanks";
