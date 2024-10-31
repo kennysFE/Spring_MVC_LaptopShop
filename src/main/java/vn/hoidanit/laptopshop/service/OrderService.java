@@ -76,4 +76,8 @@ public class OrderService {
         }
 
     }
+
+    public long countOrders() {
+        return this.orderRepository.count();
+    }
 }
