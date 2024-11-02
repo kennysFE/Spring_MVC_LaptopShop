@@ -80,4 +80,10 @@ public class HomePageController {
     public String getLogoutPage(Model model) {
         return "client/auth/deny";
     }
+
+    @GetMapping("/profile")
+    public String getProfile() {
+        return "client/profile/show";
+    }
+
 }
