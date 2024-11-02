@@ -1,5 +1,8 @@
 package vn.hoidanit.laptopshop.controller.admin;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -40,9 +44,25 @@ public class UserController {
     }
 
     @RequestMapping("/admin/user")
-    public String getUserPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
+    public String getUserPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+
+        int page = 1;
+
+        try {
+            if (pageOptional.isPresent()) {
+                page = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, 2);
+        Page<User> pageUser = this.userService.getPaginationAllUsers(pageable);
+        List<User> users = pageUser.getContent();
+
         model.addAttribute("users1", users);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageUser.getTotalPages());
         return "admin/user/show";
     }
 

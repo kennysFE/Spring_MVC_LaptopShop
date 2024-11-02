@@ -1,5 +1,7 @@
 package vn.hoidanit.laptopshop.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import vn.hoidanit.laptopshop.domain.Role;
@@ -28,6 +30,11 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    // Pagination get all users
+    public Page<User> getPaginationAllUsers(Pageable page) {
+        return this.userRepository.findAll(page);
     }
 
     public List<User> getAllUsersByEmail(String email) {
