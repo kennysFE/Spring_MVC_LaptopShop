@@ -65,7 +65,7 @@
                                 <div class="row g-4 fruite">
                                     <div class="col-12 col-md-4">
                                         <div class="row g-4">
-                                            <div class="col-12">
+                                            <div class="col-12" id="factoryFilter">
                                                 <div class="mb-2"><b>Hãng sản xuất</b></div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-1"
@@ -101,7 +101,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12" id="targetFilter">
                                                 <div class="mb-2"><b>Mục đích sử dụng</b></div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="target-1"
@@ -134,7 +134,7 @@
 
 
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12" id="priceFilter">
                                                 <div class="mb-2"><b>Mức giá</b></div>
 
                                                 <div class="form-check form-check-inline">
@@ -179,7 +179,7 @@
                                                 </div>
 
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="sort-3"
+                                                    <input class="form-check-input" type="radio" id="sort-3" checked
                                                         value="gia-nothing" name="radio-sort">
                                                     <label class="form-check-label" for="sort-3">Không sắp xếp</label>
                                                 </div>
@@ -187,7 +187,8 @@
                                             </div>
                                             <div class="col-12">
                                                 <button
-                                                    class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
+                                                class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4"
+                                                id="btnFilter">
                                                     Lọc Sản Phẩm
                                                 </button>
                                             </div>

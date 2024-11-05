@@ -2,6 +2,7 @@ package vn.hoidanit.laptopshop.controller.client;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -192,7 +193,13 @@ public class ItemController {
     @GetMapping("/products")
     public String getProductsPage(Model model,
             @RequestParam("page") Optional<String> pageOptional,
-            @RequestParam("name") Optional<String> nameOptional) {
+            @RequestParam("name") Optional<String> nameOptional,
+            @RequestParam("factory") Optional<String> factoryOptional,
+            @RequestParam("target") Optional<String> targetOptional,
+            @RequestParam("price") Optional<String> priceOptional,
+            @RequestParam("sort") Optional<String> sortOptional
+
+    ) {
 
         int page = 1;
 
@@ -206,7 +213,21 @@ public class ItemController {
 
         String name = nameOptional.isPresent() ? nameOptional.get() : "";
 
-        Pageable pageable = PageRequest.of(page - 1, 6);
+        // double minPrice = minPriceOptional.isPresent() ?
+        // Double.parseDouble(minPriceOptional.get()) : 0;
+
+        // double maxPrice = maxPriceOptional.isPresent() ?
+        // Double.parseDouble(maxPriceOptional.get()) : 0;
+
+        // List<String> nameFacToryList = Arrays.asList(nameFactory.get().split(","));
+
+        // String matchMultipleString = stringFilter.isPresent() ? stringFilter.get() :
+        // "";
+
+        // List<String> priceMultiple =
+        // Arrays.asList(priceMultipleOptional.get().split(","));
+
+        Pageable pageable = PageRequest.of(page - 1, 60);
         Page<Product> pageProduct = this.productService.getProductPaginationWithFilter(pageable, name);
         List<Product> products = pageProduct.getContent();
 
