@@ -34,6 +34,11 @@ public class ProductSpecs {
         return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.FACTORY)).value(nameFactoryList);
     }
 
+    // Filter by target name on list of product (Gaming, Office, ...)
+    public static Specification<Product> nameTargetsLike(List<String> nameTargetList) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.TARGET)).value(nameTargetList);
+    }
+
     // Filter by 10 000 000 <= price <= 15 000 000
     public static Specification<Product> matchPrice(double min, double max) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.and(
