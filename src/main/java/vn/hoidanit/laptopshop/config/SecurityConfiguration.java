@@ -65,7 +65,8 @@ public class SecurityConfiguration {
                                 DispatcherType.INCLUDE)
                         .permitAll()
 
-                        .requestMatchers("/", "/login", "/client/**", "/product/**", "/register", "/css/**", "/js/**",
+                        .requestMatchers("/", "/login", "/client/**", "/product/**", "/products/**", "/register",
+                                "/css/**", "/js/**",
                                 "/images/**")
                         .permitAll()
 
