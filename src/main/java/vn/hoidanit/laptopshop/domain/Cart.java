@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.domain;
 
 import java.util.List;
+import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,10 @@ import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name = "carts")
-public class Cart {
+public class Cart implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
