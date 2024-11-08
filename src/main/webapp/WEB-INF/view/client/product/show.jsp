@@ -245,8 +245,8 @@
                                             </c:forEach>
                                             <c:if test="${totalPages > 0}">
                                             <div class="pagination d-flex justify-content-center mt-5">
-                                                <li class="page-item">
-                                                    <a class="${1 eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                <li class="${1 eq currentPage ? 'disabled page-item' : 'page-item'}">
+                                                    <a class="page-link"
                                                         href="/products?page=${currentPage - 1}${queryString}" aria-label="Previous">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </a>
@@ -259,8 +259,8 @@
                                                         </a>
                                                     </li>
                                                 </c:forEach>
-                                                <li class="page-item">
-                                                    <a class="${totalPages eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                <li class="${totalPages eq currentPage ? 'disabled page-item' : 'page-item'}">
+                                                    <a class="page-link"
                                                         href="/products?page=${currentPage + 1}${queryString}" aria-label="Next">
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </a>
