@@ -4,6 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,5 +56,47 @@ public class UploadService {
             e.printStackTrace();
         }
         return finalName;
+    }
+
+    // Delete file from root path
+    public void deleteAllImages() throws IOException {
+
+        String pathTemporaryFolder = this.servletContext.getRealPath("/resources/images/temporary");
+
+        File directory = new File(pathTemporaryFolder);
+
+        // Kiểm tra nếu thư mục tồn tại
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles(); // Lấy danh sách tất cả tệp trong thư mục
+
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        boolean isDeleted = file.delete(); // Xóa từng tệp
+                        if (!isDeleted) {
+                            throw new IOException("file can not delete " + file.getName());
+                        }
+                    }
+                }
+            }
+        } else {
+            throw new IOException(" Directory not found " + pathTemporaryFolder);
+        }
+    }
+
+    // Destination file from temporary folder => format folder
+    public boolean moveFile(String sourcePath, String destinationPath) {
+        Path source = Paths.get(sourcePath).toAbsolutePath();
+        Path destination = Paths.get(destinationPath).toAbsolutePath();
+
+        try {
+            Files.move(source, destination, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Tệp đã được di chuyển thành công từ " + sourcePath + " đến " + destinationPath);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Lỗi khi di chuyển tệp: " + e.getMessage());
+            return false;
+        }
     }
 }
