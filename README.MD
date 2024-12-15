@@ -1,16 +1,38 @@
-# Java Spring Starter template
-Template này được sử dụng cho series Java Spring MVC (dự án laptopshop) của tác giả Hỏi Dân IT (Eric)
+# LaptopShop - Web E-commerce
 
-## Về tác giả
-Mọi thông tin về Tác giả Hỏi Dân IT, các bạn có thể tìm kiếm tại đây:
+LaptopShop là một ứng dụng web bán hàng trực tuyến, được xây dựng sử dụng Spring Boot, Spring MVC, Bootstrap. Dự án này cho phép người dùng duyệt các sản phẩm laptop, xem chi tiết sản phẩm, và thực hiện các giao dịch mua hàng trực tuyến.
 
-Website chính thức: https://hoidanit.vn/
+## Công nghệ sử dụng
 
-Youtube “Hỏi Dân IT” : https://www.youtube.com/@hoidanit
+- **Backend**: Spring framework, Spring MVC
+- **Frontend**: Bootstrap 5, JavaScript, HTML/CSS, Jsp
+- **Build tools**: Maven
+- **Database**: MySQL
+- **Language**: Java
 
-Tiktok “Hỏi Dân IT” :  https://www.tiktok.com/@hoidanit
+## Các tính năng chính
 
-Fanpage “Hỏi Dân IT” : https://www.facebook.com/askITwithERIC/
+- Hiển thị danh sách sản phẩm laptop.
+- Xem chi tiết sản phẩm.
+- Thêm sản phẩm vào giỏ hàng.
+- Quản lý giỏ hàng.
+- Hệ thống thanh toán và đặt hàng.
+- Đăng nhập và đăng ký người dùng.
 
-Udemy Hỏi Dân IT: https://www.udemy.com/user/eric-7039/
+## Cấu trúc dự án
 
+- main/java: Chứa các lớp Java, bao gồm Controller, Service, Repository.
+- controller: Các lớp điều khiển xử lý yêu cầu HTTP.
+- service: Các lớp chứa logic nghiệp vụ.
+- repository: Các lớp quản lý truy cập dữ liệu từ cơ sở dữ liệu.
+- c/main/resources: Chứa các tệp cấu hình và tài nguyên tĩnh (JSP, CSS, JS, hình ảnh, v.v.).
+- c/main/webapp: Các tệp giao diện web (JSP, HTML).
+- c/main/resources/templates: Các tệp mẫu cho JSF.
+  -om.xml: Tệp cấu hình Maven
+
+### Yêu cầu hệ thống
+
+- **Java Version**: Java 7
+- **Build tools**: Maven
+- **Databases**: MySQL
+- **IDE**: IntelliJ IDEA, Eclipse, SpringToolSute4, ...
