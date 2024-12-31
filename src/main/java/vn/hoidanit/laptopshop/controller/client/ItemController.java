@@ -1,7 +1,9 @@
 package vn.hoidanit.laptopshop.controller.client;
 
 import java.util.List;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,7 @@ import vn.hoidanit.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.hoidanit.laptopshop.service.OrderService;
 import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UserService;
+import vn.hoidanit.laptopshop.service.VNPayService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -39,10 +42,16 @@ public class ItemController {
 
     private final OrderService orderService;
 
-    public ItemController(ProductService productService, UserService userService, OrderService orderService) {
+    private final VNPayService vNPayService;
+
+    public ItemController(ProductService productService, UserService userService, OrderService orderService,
+            VNPayService vNPayService) {
+
         this.productService = productService;
         this.userService = userService;
         this.orderService = orderService;
+        this.vNPayService = vNPayService;
+
     }
 
     @GetMapping("/product/{id}")
@@ -145,13 +154,25 @@ public class ItemController {
     public String postPlaceOrder(Model model, HttpServletRequest request,
             @RequestParam("receiverName") String receiverName,
             @RequestParam("receiverAddress") String receiverAddress,
-            @RequestParam("receiverPhone") String receiverPhone) {
+            @RequestParam("receiverPhone") String receiverPhone,
+            @RequestParam("paymentMethod") String paymentMethod,
+            @RequestParam("totalPrice") String totalPrice) throws UnsupportedEncodingException {
 
         User currentUser = new User(); // null
         HttpSession session = request.getSession(false);
         currentUser.setId((long) session.getAttribute("id"));
 
-        this.productService.handlePlaceOrder(currentUser, receiverName, receiverAddress, receiverPhone, session);
+        final String uuid = UUID.randomUUID().toString().replace("-", "");
+
+        this.productService.handlePlaceOrder(currentUser, receiverName, receiverAddress, receiverPhone, session,
+                paymentMethod, uuid);
+
+        if (!paymentMethod.equals("COD")) {
+            String ip = this.vNPayService.getIpAddress(request);
+            String vnpUrl = this.vNPayService.generateVNPayURL(Double.parseDouble(totalPrice), uuid, ip);
+
+            return "redirect:" + vnpUrl;
+        }
 
         return "redirect:/thanks";
     }

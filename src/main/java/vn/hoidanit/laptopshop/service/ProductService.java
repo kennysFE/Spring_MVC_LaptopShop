@@ -2,7 +2,6 @@ package vn.hoidanit.laptopshop.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -259,7 +258,7 @@ public class ProductService {
     }
 
     public void handlePlaceOrder(User currentUser, String receiverName, String receiverAddress, String receiverPhone,
-            HttpSession session) {
+            HttpSession session, String paymentMethod, String uuid) {
 
         // Get cart by user id
         Cart cart = this.cartRepository.findByUser(currentUser);
@@ -275,6 +274,10 @@ public class ProductService {
                 order.setReceiverName(receiverName);
                 order.setStatus("PENDING");
                 order.setReceiverPhone(receiverPhone);
+
+                order.setPaymentMethod(paymentMethod);
+                order.setPaymentStatus("PAYMENT_UNPAID");
+                order.setPaymentRef(paymentMethod.equals("COD") ? "UNKNOWN" : uuid);
 
                 // Get totalPrice for Order
                 double sum = 0;
