@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.controller.client;
 
 import java.util.List;
+import java.util.Optional;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -178,7 +179,18 @@ public class ItemController {
     }
 
     @GetMapping("/thanks")
-    public String getThanksPage() {
+    public String getThanksPage(Model model,
+            @RequestParam("vnp_ResponseCode") Optional<String> vnpayResponseCode,
+            @RequestParam("vnp_TxnRef") Optional<String> paymentRef) {
+
+        if (vnpayResponseCode.isPresent() && paymentRef.isPresent()) {
+            // thanh toán qua VNPAY, cập nhật trạng thái order
+            String paymentStatus = vnpayResponseCode.get().equals("00")
+                    ? "PAYMENT_SUCCEED"
+                    : "PAYMENT_FAILED";
+            this.productService.updatePaymentStatus(paymentRef.get(), paymentStatus);
+        }
+
         return "client/cart/thanks";
     }
 

@@ -25,4 +25,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByUser(User user);
 
     Page<Order> findAll(Pageable page);
+
+    Optional<Order> findByPaymentRef(String paymentRef);
 }
