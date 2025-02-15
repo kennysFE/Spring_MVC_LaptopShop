@@ -14,6 +14,11 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    /**
+     * 
+     * @return InternalResourceViewResolver: The Spring MVC definition and
+     *         configuration method know how to resolve JSP views.
+     */
     @Bean
     public ViewResolver viewResolver() {
         final InternalResourceViewResolver bean = new InternalResourceViewResolver();
